@@ -1,0 +1,45 @@
+#1
+who -u > user.txt
+
+#2
+ps -aux | less >> user.txt
+">> append"
+
+#3
+who -u | sort
+
+#4
+
+#5
+head -n 3 /etc/fstab & tail -n 3 /etc/fstab | nl
+
+#6
+Using awk and build-in variable NR
+*Note: we will have the varibles to store the object in one line such as $1,$2,$3,...
+For example:
+Name         Sport       Class    
+NguyenVanA   BongRo      12A3
+NguyenVanB   BongDa      10A6
+NguyenVanC   CauLong     9A5
+
+$1 = Name; $2 = Sport; $3 = Class
+$0 entire line
+
+awk 'NR=5,NR=10 {print $0,NR}' /etc/fstab > extract.txt
+
+#7
+First create full permission files in folder
+nano fullPermissionFile<1...n>.txt
+sudo chmod a+rwx fullPermissionFile<1....n>.txt
+*Note r/w/x: read; write; execute permission
+	a: mean all
+
+Second do the main task
+ls -la | awk '$1=="-rwxrwxrwx" print{$0}'
+
+#8
+Compare two files and show percentage of similarities between them
+First find the number of removed lines put it in the variable called remov
+Second fin the number of added lines put it in the variable called added
+Get total line number put it in the variable called firstCount
+
