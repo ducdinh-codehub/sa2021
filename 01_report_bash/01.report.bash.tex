@@ -1,0 +1,151 @@
+\documentclass{article}
+\usepackage{tcolorbox}
+\usepackage{amsmath}
+
+\begin{document}
+
+\begin{tcolorbox}
+1) List everyone logged in and save the list in a file called "users" in your own home directory.
+\\
+\\COMMAND:
+\\who -u \textgreater users.txt
+\end{tcolorbox}
+
+\begin{tcolorbox}
+\\RESULT:
+\\duc       :0             2021-03-06 17:06   ?          1719 (:0)
+\\am        :1             2021-03-06 19:22   ?          83347 (:1)
+\\tu          :2             2021-03-06 19:26   ?          85396 (:2)
+\\thanh     :3             2021-03-06 19:32   ?          87412 (:3)
+\\a           :4             2021-03-06 19:35   ?          89277 (:4)
+\end{tcolorbox}
+
+\begin{tcolorbox}
+2) List all processes that are running and add this list to the end of the “users” file.
+\\
+\\COMMAND:
+\\ps -aux \textgreater \textgreater users.txt
+\end{tcolorbox}
+
+\begin{tcolorbox}
+\\RESULT:
+\\duc      :0           2021-03-06 17:06   ?          1719 (:0)
+l\\am      :1           2021-03-06 19:22   ?         83347 (:1)
+\\tu       :2           2021-03-06 19:26   ?         85396 (:2)
+\\thanh    :3           2021-03-06 19:32   ?         87412 (:3)
+\\a        :4           2021-03-06 19:35   ?         89277 (:4)
+\\USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+\\root           1  0.1  s0.0 169560 13496 ?        Ss   17:04   0:16 /sbin/init splash
+\\root           2  0.0  0.0      0     0 ?        S    17:04   0:00 [kthreadd]
+\\root           3  0.0  0.0      0     0 ?        I<   17:04   0:00 [rcu_gp]
+\\root           4  0.0  0.0      0     0 ?        I<   17:04   0:00 [rcu_par_gp]
+\\etc -etc .....
+\end{tcolorbox}
+
+\newpage
+
+\begin{tcolorbox}
+3) List everyone who is logged on sorted by their username
+\\
+\\COMMAND:
+\\who -u \textgreater \textgreater users.txt
+\end{tcolorbox}
+
+\begin{tcolorbox}
+\\RESULT:
+\\a           :4           2021-03-06 19:35   ?         89277 (:4)
+\\duc        :0           2021-03-06 17:06   ?          1719 (:0)
+\\lam        :1           2021-03-06 19:22   ?         83347 (:1)
+\\thanh     :3           2021-03-06 19:32   ?         87412 (:3)
+\\tu          :2           2021-03-06 19:26   ?         85396 (:2)
+\end{tcolorbox}
+
+\begin{tcolorbox}
+5) Show content of the first and last 3 lines of the file “/etc/fstab”
+\\
+\\COMMAND:
+\\head -n 3 /etc/fstab & tail -n 3 /etc/fstab2
+\end{tcolorbox}
+
+\begin{tcolorbox}
+\\RESULT:
+\\/etc/fstab: static file system information.
+\\
+\\Use 'blkid' to print the universally unique identifier for a
+\\/boot/efi was on /dev/nvme0n1p2 during installation
+\\UUID=B69B-EC8F  /boot/efi       vfat    umask=0077      0       1
+\\/swapfile                                 none            swap    sw              0       0
+\end{tcolorbox}
+
+\begin{tcolorbox}
+6) Retrieve line number 5 to 10 from the file “/etc/fstab” and write these lines into a new file “extract.txt”
+\\
+\\*NOTE how to use awk and build-in variable NR
+\\We will have the varibles to store the object in one line such as \$1,\$2,\$3,...
+\\For example:
+\\
+\begin{tabular}{  c c c }
+\\Name             &Sport          &Class    
+\\NguyenVanA   &BongRo      &12A3
+\\NguyenVanB   &BongDa      &10A6
+\\NguyenVanC   &CauLong     &9A5
+\end{tabular}
+\\
+\\ \$1 = Name; \$2 = Sport; \$3 = Class
+\\ \$0 entire line
+\\
+\\COMMAND:
+\\awk "NR==5, NR==10 {print \$0, NR}" /etc/fstab | nl  \textgreater extract.txt
+\end{tcolorbox}
+
+\begin{tcolorbox}
+\\RESULT:
+\\     1	that works even if disks are added and removed. See fstab(5). 5
+\\     2	6
+\\     3	<file system> <mount point>   <type>  <options>       <dump>  <pass> 7
+\\     4	/ was on /dev/sda3 during installation 8
+\\     5	UUID=02094cb8-5296-4d94-b434-e47d224f9354 /               ext4    errors=remount-ro 0       1 9
+\\     6	boot/efi was on /dev/nvme0n1p2 during installation 10
+\end{tcolorbox}
+
+\begin{tcolorbox}
+7) List all files in current directory, recursively, to which the user has full permissions
+\\*NOTE:
+\\First create full permission files in folder
+\\nano fullPermissionFile<1...n>.txt
+\\sudo chmod a+rwx fullPermissionFile<1....n>.txt
+\\r/w/x: read; write; execute permission; a: mean all
+\\
+\\COMMAND:
+\\ls -la | awk '\$1==\"-rwxrwxrwx\"'
+\end{tcolorbox}
+
+\begin{tcolorbox}
+\\RESULT:
+\\/etc/fstab: static file system information.
+\\
+\\Use 'blkid' to print the universally unique identifier for a
+\\/boot/efi was on /dev/nvme0n1p2 during installation
+\\UUID=B69B-EC8F  /boot/efi       vfat    umask=0077      0       1
+\\/swapfile                                 none            swap    sw              0       0
+\end{tcolorbox}
+
+\begin{tcolorbox}
+8) Compare two files and show percentage of similarities between them
+\\*NOTE:
+\\Compare two files and show percentage of similarities between them
+\\First find the number of removed lines put it in the variable called remov
+\\Second fin the number of added lines put it in the variable called added
+\\Get total line number put it in the variable called firstCount
+\\
+\\COMMAND:
+\\removed = 'diff -u compareFIle1.txt compareFIle2.txt | grep \"^-\" | grep -v \"^---\"| wc -l'
+\\added = 'diff -u compareFIle1.txt compareFIle2.txt | grep \"^+\" | grep -v \"^+++\"| wc -l'
+\\firstcount = ''cat compareFIle1.txt | wc -l'
+\\secondcount = 'cat compareFile2.txt | wc -l'
+\\percent = \$((( (\$secondcount - \$added)*100 ) /(\$firstCount)))
+\\echo $percent
+\end{tcolorbox}
+
+\end{document}
+
