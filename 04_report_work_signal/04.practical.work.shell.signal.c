@@ -19,6 +19,7 @@ void handler(int signal_num){
 }
 int main(void){
     /*
+    // Basic example.
     // ctrl z
     signal(SIGTSTP,handler);
     // ctrl c or killed
@@ -28,7 +29,6 @@ int main(void){
         sleep(1);
         printf(".\n");
     }*/
-
 	printf("Main before fork\n");
 	char command[100];
 	char parameter[100];
@@ -43,18 +43,13 @@ int main(void){
 		printf("Type parameter:\n");
 		scanf("%s",parameter);
 		printf("Your command %s %s\n",command,parameter);
-
 		int pid = fork();
 		printf("Process id: %d",pid);
-
-
 		if(pid == 0){
 			printf("I'm child after fork(), launching!");
-
 			char *args[] = {command, parameter, NULL};
 			execvp(command,args);
             kill(pid, SIGKILL);
-
             printf("Finished launching ps -ef\n");
 		}
         signal(SIGTSTP, handler);
