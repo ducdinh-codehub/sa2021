@@ -1,0 +1,34 @@
+while(1){
+print
+fgets(cmd,sizof(cmd),stdin);
+
+char *args[100];
+memset(args, 0, sizeof(args));
+int argc = 0;
+int prevArgPos = 0;
+
+for(int i=0; i< strlen(cmd); i++){
+	if(cmd[i]==' ' || i = len - 1){
+		printf("First found char at %d\n",i);
+		args[argc++] = &cmd[prev];
+		cmd[i] = 0;
+		prevArgPos = i + 1;
+
+	}
+}
+
+int pipePos = -1;
+for(int i = 0; i < argc; i++){
+    if(strcmp(args[i], "|") == 0){
+        pipePos = i;
+        args[i] = 0;
+        break;
+    }
+}
+
+if(pipePos >= 0){
+    execvp(args[pipePos + 1], &args[pipePos + 1]);
+}wlse{
+    execvp(args[0], args);
+}
+}
