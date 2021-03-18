@@ -33,19 +33,18 @@ int main(){
 		}
 	
 		clen=sizeof(caddr);
-		if((clientfd=accept(sockfd, (struct sockaddr *) &caddr, &clen)) < 0) 
-			{	
-				printf("Error accepting connection\n");
-				exit(1);
-			}
+	if((clientfd=accept(sockfd, (struct sockaddr *) &caddr, &clen)) < 0) 
+		{	
+			printf("Error accepting connection\n");
+			exit(1);
+		}
 	while(1){
 			char buffer[100];
 			memset(buffer,0,sizeof(buffer));
 			recv(clientfd, buffer, sizeof(buffer), 0);
 			printf("%s\n",(char *)buffer);
-
 			char alertNoti[100] = "<Server side> Msg reaches server";
 			send(clientfd, alertNoti, strlen(alertNoti),0);
-	}
+		}
 	return 0;
 }
