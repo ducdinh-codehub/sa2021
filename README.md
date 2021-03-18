@@ -9,8 +9,5 @@ Students are expected to:
 Student Info
 =========================
 
-* Student Name: *Put your name here*
-* Student ID: *Put your ID here*
-
-Student Name: Dinh Anh Duc
-Student ID: M20.ICT.001
+* Student Name: Dinh Anh Duc
+* Student ID: M20.ICT.001
